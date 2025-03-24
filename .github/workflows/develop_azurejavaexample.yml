@@ -27,6 +27,9 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
+      - name: Check if WAR file exists
+        run: ls -lh target/*.war
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -48,7 +51,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: azureJavaExample
-      
+
+      - name: Check if downloaded WAR file exists
+        run: ls -lh ./deploy-artifact/*.war
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -62,5 +68,5 @@ jobs:
         with:
           app-name: 'azureJavaExample'
           slot-name: 'Production'
-          package: '*.war'
+          package: './deploy-artifact/*.war'
           
