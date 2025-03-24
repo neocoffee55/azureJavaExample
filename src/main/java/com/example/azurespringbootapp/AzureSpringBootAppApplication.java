@@ -18,6 +18,6 @@ class HelloController {
 
     @GetMapping("/")
     public String hello() {
-        return "Hello, Azure App Service!";
+        return "Hello, Azure App Service???";
     }
 }
