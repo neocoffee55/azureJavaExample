@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: azureJavaExample
-          path: '${{ github.workspace }}/target/*.war'
+          path: target/*.war
 
   deploy:
     runs-on: ubuntu-latest
@@ -43,14 +43,15 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: azureJavaExample
+          path: ./deploy-artifact
 
       - name: Check if downloaded WAR file exists
         run: ls -lh ./deploy-artifact/*.war
@@ -69,4 +70,3 @@ jobs:
           app-name: 'azureJavaExample'
           slot-name: 'Production'
           package: './deploy-artifact/*.war'
-          
