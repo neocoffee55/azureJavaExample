@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy WAR app to Azure Web App - azureJavaExample
 
 on:
@@ -24,13 +27,10 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - name: Check if WAR file exists
-        run: ls -lh target/*.war
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: azureJavaExample
+          name: java-app
           path: '${{ github.workspace }}/target/*.war'
 
   deploy:
@@ -47,17 +47,14 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: azureJavaExample
-
-      - name: Check if downloaded WAR file exists
-        run: ls -lh ./deploy-artifact/*.war
-
+          name: java-app
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_02B0CB5F8A5646F980A95F0F794B8715 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_7C63DB7E94744EC6A647CB5BBB0738E0 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E5B80DABD0D440DFB760CB64A890589D }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8D0419340FF34F4F8DECAE020E42DEDA }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EEC495BB943D44A387F5242AA36D5FA0 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2B79CE1BB32E46339121D3EA40AE2AC4 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -65,4 +62,5 @@ jobs:
         with:
           app-name: 'azureJavaExample'
           slot-name: 'Production'
-          package: './deploy-artifact/*.war'
+          package: '*.war'
+          
