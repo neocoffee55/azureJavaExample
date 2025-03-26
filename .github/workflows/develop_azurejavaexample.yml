@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy jar app to Azure Web App - azureJavaExample
+name: Build and deploy JAR app to Azure Web App - azureJavaExample
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '8'
           distribution: 'microsoft'
 
       - name: Build with Maven
@@ -39,7 +39,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+      
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -53,5 +53,4 @@ jobs:
           app-name: 'azureJavaExample'
           slot-name: 'Production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FA89086AB9A84B978C45FE0C43A6CDCB }}
-          deployment-method: 'zipDeploy'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_248354FA49754022A0F49D8189E31D7F }}
