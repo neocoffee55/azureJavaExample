@@ -54,3 +54,4 @@ jobs:
           slot-name: 'Production'
           package: '*.jar'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FA89086AB9A84B978C45FE0C43A6CDCB }}
+         #deployment-method: 'ZipDeploy'
